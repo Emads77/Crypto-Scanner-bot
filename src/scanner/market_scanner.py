@@ -60,7 +60,8 @@ class MarketScanner:
             # Send one batched message
             if detections:
                 self._send_batch_alert(detections)
-                logging.info(f"Scan complete. {len(detections)} patterns detected.")
+                logging.info(
+                    f"Scan complete. {len(detections)} patterns detected.")
             else:
                 logging.info("Scan complete. No patterns detected.")
 
@@ -110,7 +111,8 @@ class MarketScanner:
         for timeframe in self.timeframes:
             try:
                 # Fetch candles
-                candles = self.api.get_candles(market, interval=timeframe, limit=25)
+                candles = self.api.get_candles(
+                    market, interval=timeframe, limit=25)
 
                 if len(candles) < 3:
                     continue
@@ -122,7 +124,8 @@ class MarketScanner:
                     if result.detected:
                         if self._can_alert(market, timeframe, result.pattern_name):
                             detections.append(result)
-                            self._mark_alerted(market, timeframe, result.pattern_name)
+                            self._mark_alerted(
+                                market, timeframe, result.pattern_name)
                             logging.info(
                                 f"DETECTED: {market} {timeframe} - {result.pattern_name}"
                             )
@@ -184,27 +187,10 @@ class MarketScanner:
             )
 
             msg += f"{i}. <b>{result.market}</b> - {result.pattern_name} ({result.timeframe})\n"
-
-            # Show details based on pattern type
-            if result.pattern_name == "3 Green Candles":
-                candles = result.details.get("candles", [])
-                for c in candles:
-                    msg += f"   #{c['number']}: +{c['gain_pct']}% | Vol: {c['volume']:,}\n"
-            elif result.pattern_name == "Bullish Volume Surge":
-                msg += f"   Gain: +{result.details['gain_pct']}%\n"
-                msg += f"   Today Vol: {result.details['today_volume']:,}\n"
-                msg += (
-                    f"   Yesterday Vol: {result.details['yesterday_volume']:,}\n"
-                )
-                msg += f"   Volume Ratio: {result.details['volume_ratio']}×\n"
-            elif result.pattern_name == "Two-Candle Bullish Reversal":
-                msg += f"   Green Gain: +{result.details['green_gain_pct']}%\n"
-                msg += f"   Volume Increase: {result.details['volume_increase']}×\n"
-            msg += f"   {tv_link}\n\n"
+            msg += result.pattern.notificationFormatter(result.details)
+            msg += f"   {tv_link}\n\n"  # Add this line!
 
         self.notifier.send(msg)
-
-
 
     def _calc_spread_pct(self, ask: float, bid: float) -> float:
         """Calculate spread percentage."""

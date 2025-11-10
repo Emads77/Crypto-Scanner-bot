@@ -28,7 +28,7 @@ patterns = [
     TwoCandleBullishReversalPattern()
     
 ]
-timeframes = ["15m","1h","4h","1d", "1w"]  
+timeframes = ["15m","1h","4h","1d"]  
 
 scanner = MarketScanner(
     api_client=api,

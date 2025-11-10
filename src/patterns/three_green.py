@@ -36,11 +36,23 @@ class ThreeGreenCandlesPattern(BasePattern):
         
         return PatternResult(
             detected=True,
+            pattern=self,
             market=market,
             pattern_name="3 Green Candles",
             timeframe=timeframe,
             details=details
         )
+    
+    def notificationFormatter(self, details):
+        msg =""
+        candles = details.get("candles", [])
+        for c in candles:
+             msg += f"   #{c['number']}: +{c['gain_pct']}% \n"
+        
+        return msg
+    
+    
+    
     
     def _is_green_with_body(self, candle) -> bool:
         """Check if candle is green and has decent body."""

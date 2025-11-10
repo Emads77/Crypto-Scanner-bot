@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from typing import List
 from ..domain.pattern_result import PatternResult
+from typing import List, Dict, Any  # Add Dict and Any
 
 class BasePattern(ABC):
     """Abstract base class for all pattern detectors."""
@@ -17,5 +17,18 @@ class BasePattern(ABC):
         
         Returns:
             PatternResult with detection status and details
+        """
+        pass
+    
+    @abstractmethod
+    def notificationFormatter(self,details:Dict[str,Any])-> str:
+        """
+        Format pattern details for alert message.
+        
+        Args:
+            details: Dictionary with pattern-specific data
+            
+        Returns:
+            Formatted string for Telegram alert
         """
         pass

@@ -86,6 +86,7 @@ class TwoCandleBullishReversalPattern(BasePattern):
 
         return PatternResult(
             detected=True,
+            pattern=self,
             market=market,
             pattern_name="Two-Candle Bullish Reversal",
             timeframe=timeframe,
@@ -97,3 +98,12 @@ class TwoCandleBullishReversalPattern(BasePattern):
             }
         )
         
+        
+        
+    def notificationFormatter(self, details):
+        
+        msg = ""
+        msg += f"   Green Gain: +{details['green_gain_pct']}%\n"
+        msg += f"   Volume Increase: {details['volume_increase']}×\n"
+        return msg
+            

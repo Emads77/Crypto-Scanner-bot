@@ -9,12 +9,14 @@ class PatternResult:
     def __init__(
         self,
         detected: bool,
+        pattern = None,
         market: str = "",
         pattern_name: str = "",
         timeframe: str = "",
         details: Dict[str, Any] = None
     ):
         self.detected = detected
+        self.pattern = pattern
         self.market = market
         self.pattern_name = pattern_name
         self.timeframe = timeframe

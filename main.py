@@ -35,7 +35,7 @@ def main():
     ]
     
     # Define timeframes
-    timeframes = [ "4h"]
+    timeframes = ["4h"]
     # ,"15m", "1h", "1d", "1w"
     
     # Create scanner
