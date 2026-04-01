@@ -112,7 +112,7 @@ class MarketScanner:
             try:
                 # Fetch candles
                 candles = self.api.get_candles(
-                    market, interval=timeframe, limit=25)
+                    market, interval=timeframe, limit=50)
 
                 if len(candles) < 3:
                     continue

@@ -6,6 +6,8 @@ from src.scanner.market_scanner import MarketScanner
 from src.utils.config import load_config
 from src.patterns.volume_surge import BullishVolumeSurgePattern
 from src.patterns.two_candle_bullish_reversal import TwoCandleBullishReversalPattern
+from src.patterns.launchpad_breakout import LaunchpadBreakoutPattern
+
 
 
 # Setup logging
@@ -25,7 +27,13 @@ notifier = TelegramNotifier(
 patterns = [
     ThreeGreenCandlesPattern(min_body_pct=50.0),
     BullishVolumeSurgePattern(min_volume_multiplier=2.0),
-    TwoCandleBullishReversalPattern()
+    TwoCandleBullishReversalPattern(),
+      LaunchpadBreakoutPattern(
+        lookback_candles=20,
+        min_volume_multiplier=3.0,
+        min_breakout_pct=0.04,
+        max_sleep_volatility=0.15  # loosened from 3% to 15%
+    )
     
 ]
 timeframes = ["15m","1h","4h","1d"]  
