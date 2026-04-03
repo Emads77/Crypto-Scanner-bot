@@ -3,6 +3,14 @@ from .base_pattern import BasePattern
 from ..domain.pattern_result import PatternResult
 
 
+
+
+#It detects a bounce/reversal setup using 3 candles:
+# Hammer candle — long lower shadow (price was rejected downward), small upper shadow
+# Green confirmation candle — strong bullish candle with volume higher than the hammer
+# Current candle — holds above the green candle's close
+
+
 class TwoCandleBullishReversalPattern(BasePattern):
 
     def __init__(self, min_lower_shadow_ratio=2.5, max_upper_shadow_ratio=0.3, min_green_body_pct=70.0, min_volume_multiplier=1.05):
